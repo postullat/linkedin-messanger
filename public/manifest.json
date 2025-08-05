@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Linkedin Extension",
+  "version": "1.0",
+  "description": "Chrome Linkedin extension with React + Vite",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["injected.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "permissions": ["webRequest", "activeTab", "storage", "scripting"],
+  "host_permissions": ["<all_urls>"]
+}
