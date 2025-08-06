@@ -1,8 +1,9 @@
-import { Popup } from "./components/Popup";
-import './index.css';
+import "./index.css";
+import { RouterProvider } from "react-router";
+import { router } from "./router";
 
 function App() {
-  return <Popup />;
+  return <RouterProvider router={router} />;
 }
 
 export default App;

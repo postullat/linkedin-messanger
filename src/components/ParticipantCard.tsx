@@ -11,14 +11,14 @@ interface ParticipantCardProps extends ComponentProps<"div"> {
 }
 
 export const ParticipantCard = (props: ParticipantCardProps) => {
-  const { imageUrl, firstName, lastName, profileUrl } = props;
+  const { imageUrl, firstName, lastName, profileUrl, ...rest } = props;
 
   const handleClickVisit = () => {
     window.open(profileUrl, "_blank");
   };
 
   return (
-    <Card className={classNames("flex flex-row justify-between", props.className)}>
+    <Card className={classNames("flex flex-row justify-between", props.className)} {...rest}>
       <div>
         <img src={imageUrl} className="w-10 h-10 rounded-full mb-2" />
         <span className="font-bold">

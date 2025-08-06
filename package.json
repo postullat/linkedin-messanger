@@ -15,9 +15,13 @@
     "class-variance-authority": "^0.7.1",
     "classnames": "^2.5.1",
     "clsx": "^2.1.1",
+    "install": "^0.13.0",
     "lucide-react": "^0.536.0",
+    "npm": "^11.5.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-router": "^7.7.1",
+    "react-router-dom": "^7.7.1",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.11",
     "vite-plugin-web-extension": "^4.4.5"

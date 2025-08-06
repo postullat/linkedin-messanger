@@ -15,4 +15,5 @@ export interface MessengerConversation {
     categories: string[];
     conversationParticipants: ConversationParticipant[];
     notificationStatus: string;
+    entityUrn: string;
 }

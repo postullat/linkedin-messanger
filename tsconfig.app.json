@@ -29,5 +29,5 @@
       ]
     }
   },
-  "include": ["src", "public/background.js", "public/content.js"]
+  "include": ["src", "src/background.ts", "public/content.js"]
 }
