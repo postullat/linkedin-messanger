@@ -18,7 +18,7 @@ export const ParticipantCard = (props: ParticipantCardProps) => {
   };
 
   return (
-    <Card className={classNames("flex flex-row justify-between", props.className)} {...rest}>
+    <Card {...rest} className={classNames("flex flex-row justify-between", props.className)}>
       <div>
         <img src={imageUrl} className="w-10 h-10 rounded-full mb-2" />
         <span className="font-bold">

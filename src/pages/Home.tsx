@@ -1,29 +1,23 @@
 import type { MessengerConversation } from "@/types/MessengerConversation";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { ParticipantCard } from "../components/ParticipantCard";
 import { useNavigate } from "react-router";
-export const Home = () => {
+
+export const HomeComponent = () => {
   const [conversations, setConversations] = useState<MessengerConversation[]>([]);
   const navigate = useNavigate();
   useEffect(() => {
-    chrome.runtime.sendMessage({ type: "GET_DATA" }, (response = []) => {
-      setConversations((prev) => [...prev, ...response]);
+    let canceled = false;
+    chrome.runtime.sendMessage({ type: "GET_DATA" }, (response) => {
+      if (!canceled) {
+        setConversations((prev) => [...prev, ...(response || [])]);
+        console.log("render");
+      }
     });
+    return () => {
+      canceled = true;
+    };
   }, []);
-
-  // const getMessages = (entityUrn: string) => {
-  //   console.log(entityUrn);
-  //   chrome.runtime.sendMessage(
-  //     { type: "GET_LINKEDIN_MESSAGES", payload: entityUrn },
-  //     (response) => {
-  //       if (response.success) {
-  //         console.log("Messages:", response.data);
-  //       } else {
-  //         console.error("Error:", response.error);
-  //       }
-  //     }
-  //   );
-  // };
 
   if (!conversations || conversations.length === 0) {
     return (
@@ -34,7 +28,7 @@ export const Home = () => {
   }
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 pb-4">
       {conversations.map((element) => {
         const participant = element.conversationParticipants[0];
         const member = participant.participantType.member;
@@ -49,12 +43,14 @@ export const Home = () => {
             lastName={member.lastName.text}
             profileUrl={member.profileUrl}
             onClick={() => {
-              navigate(`/chat/${element.entityUrn}`)
+              navigate(`/chat/${element.entityUrn}`);
             }}
-            className="p-4"
+            className="p-4 cursor-pointer"
           />
         );
       })}
     </div>
   );
 };
+
+export const Home = memo(HomeComponent);

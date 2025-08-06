@@ -43,9 +43,8 @@ chrome.runtime.onMessage.addListener((msg, _, sendResponse) => {
 import { linkedinApi } from "@/api/linkedinApi"
 
 chrome.runtime.onMessage.addListener((message,_, sendResponse) => {
-  if (message.type === "GET_LINKEDIN_MESSAGES") {
+  if (message.type === "GET_MESSAGES") {
     const entityUrn = message.payload;
-
     chrome.storage.local.get("token", async (result) => {
       const tokenHeader = result.token;
 
@@ -56,7 +55,7 @@ chrome.runtime.onMessage.addListener((message,_, sendResponse) => {
 
       try {
         const data = await linkedinApi.getConversationMessages(entityUrn, tokenHeader.value);
-        sendResponse({ success: true, data });
+        sendResponse({ success: true, data: data.data.messengerMessagesBySyncToken.elements });
       } catch (error: any) {
         sendResponse({ success: false, error: error.message });
       }

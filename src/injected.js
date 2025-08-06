@@ -30,6 +30,7 @@ function init() {
       const data = await clone.json();
       const conversations = data?.data?.messengerConversationsBySyncToken?.elements;
       windowPostMessage("my-injected-script",conversations);
+      console.log(conversations);
     } catch (error) {
       console.error(error);
     }

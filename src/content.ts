@@ -1,7 +1,7 @@
 const script = document.createElement("script");
-script.src = chrome.runtime.getURL("injected.js");
+script.src = chrome.runtime.getURL("src/injected.js");
 script.onload = function () {
-  this.remove();
+  script.remove();
 };
 script.onerror = function (error) {
   console.error("Failed to load injected script:", error);
@@ -9,7 +9,7 @@ script.onerror = function (error) {
 
 window.addEventListener("message", (event) => {
   if (event.source !== window) return;
-  if (event.data && !event.data.source === "my-injected-script") return;
+  if (event.data && !(event.data.source === "my-injected-script")) return;
   chrome.runtime.sendMessage({
     type: "FROM_PAGE",
     payload: event.data.payload,

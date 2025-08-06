@@ -1,21 +1,17 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
-import path, { resolve } from "path";
+import path from "path";
+import { crx } from '@crxjs/vite-plugin';
+import manifest from './src/manifest.config';
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  build: {
-    outDir: "dist",
-    emptyOutDir: true,
-    rollupOptions: {
-      input: {
-        main: resolve(__dirname, "index.html"),
-        background: resolve(__dirname, "src/background.ts"),
-      },
-      output: {
-        entryFileNames: "[name].js",
-      },
+  plugins: [react(), tailwindcss(),crx({ manifest })],
+  server: {
+    cors: {
+      origin: [
+        /chrome-extension:\/\//,
+      ],
     },
   },
   resolve: {
