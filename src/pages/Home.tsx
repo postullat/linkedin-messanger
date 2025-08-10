@@ -1,24 +1,10 @@
-import type { MessengerConversation } from "@/types/MessengerConversation";
-import { memo, useEffect, useState } from "react";
 import { ParticipantCard } from "../components/ParticipantCard";
 import { useNavigate } from "react-router";
+import { useConversations } from "@/hooks/useConversations";
 
-export const HomeComponent = () => {
-  const [conversations, setConversations] = useState<MessengerConversation[]>([]);
+export const Home = () => {
+  const { conversations } = useConversations();
   const navigate = useNavigate();
-  useEffect(() => {
-    let canceled = false;
-    chrome.runtime.sendMessage({ type: "GET_DATA" }, (response) => {
-      if (!canceled) {
-        setConversations((prev) => [...prev, ...(response || [])]);
-        console.log("render");
-      }
-    });
-    return () => {
-      canceled = true;
-    };
-  }, []);
-
   if (!conversations || conversations.length === 0) {
     return (
       <div className="flex flex-col gap-3">
@@ -26,16 +12,23 @@ export const HomeComponent = () => {
       </div>
     );
   }
-
   return (
     <div className="flex flex-col gap-3 pb-4">
       {conversations.map((element) => {
-        const participant = element.conversationParticipants[0];
+        const participant =
+          element.conversationParticipants.find(
+            (participant) => participant.participantType.member.distance !== "SELF"
+          ) || element.conversationParticipants[0];
         const member = participant.participantType.member;
         const profilePicture = member.profilePicture;
+        const selfProfleData = element.conversationParticipants.find(
+          (conversationParticipant) =>
+            conversationParticipant.participantType.member.distance === "SELF"
+        );
+        console.log(element);
         return (
           <ParticipantCard
-            key={element.backendUrn}
+            key={element.createdAt}
             imageUrl={
               profilePicture.rootUrl + profilePicture.artifacts[1].fileIdentifyingUrlPathSegment
             }
@@ -43,7 +36,9 @@ export const HomeComponent = () => {
             lastName={member.lastName.text}
             profileUrl={member.profileUrl}
             onClick={() => {
-              navigate(`/chat/${element.entityUrn}`);
+              navigate(`/chat/${element.entityUrn}`, {
+                state: { selfProfleData },
+              });
             }}
             className="p-4 cursor-pointer"
           />
@@ -52,5 +47,3 @@ export const HomeComponent = () => {
     </div>
   );
 };
-
-export const Home = memo(HomeComponent);

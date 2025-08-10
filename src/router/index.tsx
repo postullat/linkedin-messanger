@@ -1,23 +1,18 @@
-import { Chat } from "@/pages/Chat";
+import { ChatPage } from "@/pages/chat";
 import { Home } from "@/pages/Home";
 import { createBrowserRouter } from "react-router-dom";
 
-export const router = createBrowserRouter(
-  [
-    {
-      path: "/",
-      element: <Home />,
-    },
-    {
-      path: "/index.html",
-      element: <Home />,
-    },
-    {
-      path: "/chat/:id",
-      element: <Chat />,
-    },
-  ],
+export const router = createBrowserRouter([
   {
-    basename: "/",
-  }
-);
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/index.html",
+    element: <Home />,
+  },
+  {
+    path: "/chat/:entityUrn",
+    element: <ChatPage />,
+  },
+]);

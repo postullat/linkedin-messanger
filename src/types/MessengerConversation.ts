@@ -16,4 +16,5 @@ export interface MessengerConversation {
     conversationParticipants: ConversationParticipant[];
     notificationStatus: string;
     entityUrn: string;
+    createdAt: string;
 }
