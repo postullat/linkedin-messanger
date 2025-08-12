@@ -1,7 +1,7 @@
 const queryId = "messengerConversations";
 
 const isRequiredRequest = (url, method) => {
-  return url.includes("linkedin.com") && method === "GET" && url.includes(queryId);
+  return url.includes("linkedin.com") && method === "GET" && url.includes(queryId) && !url.includes("syncToken");
 };
 
 const windowPostMessage = (source, payload) => {
@@ -28,9 +28,10 @@ function init() {
 
     try {
       const data = await clone.json();
+      console.log(data,"data");
+      console.log(url,"url");
       const conversations = data?.data?.messengerConversationsBySyncToken?.elements;
       windowPostMessage("my-injected-script",conversations);
-      console.log(conversations);
     } catch (error) {
       console.error(error);
     }

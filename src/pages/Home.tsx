@@ -25,7 +25,6 @@ export const Home = () => {
           (conversationParticipant) =>
             conversationParticipant.participantType.member.distance === "SELF"
         );
-        console.log(element);
         return (
           <ParticipantCard
             key={element.createdAt}

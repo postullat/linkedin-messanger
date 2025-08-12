@@ -22,12 +22,6 @@ export const handleSendMessage = async (args: HandleSendMessageArgs) => {
   }
 
   try {
-    console.log({
-      entityUrn,
-      hostIdentityUrn,
-      csrfToken: csrfToken.value,
-      messageText,
-    },"payload");
     const data = await linkedinApi.sendMessage(
       entityUrn,
       hostIdentityUrn,

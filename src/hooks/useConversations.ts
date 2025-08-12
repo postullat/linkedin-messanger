@@ -8,7 +8,6 @@ export const useConversations = () => {
     chrome.runtime.sendMessage({ type: "GET_DATA" }, (response) => {
       if (!canceled) {
         setConversations((prev) => [...prev, ...(response || [])]);
-        console.log("render");
       }
     });
     return () => {

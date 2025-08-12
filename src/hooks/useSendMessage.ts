@@ -1,8 +1,18 @@
+import { useMutation, type UseMutationOptions } from "@tanstack/react-query";
 
-import { queryClient } from "@/App";
-import { useMutation } from "@tanstack/react-query";
+type UseSendMessageOptions = {
+  mutationOptions: Partial<UseMutationOptions<void, Error, string, unknown>>;
+};
 
-export const useSendMessage = (entityUrn: string, hostIdentityUrn: string) => {
+type UseSendMessageArgs = {
+  entityUrn: string;
+  hostIdentityUrn: string;
+};
+
+type UseSendMessageProps = UseSendMessageArgs & UseSendMessageOptions;
+
+export const useSendMessage = (props: UseSendMessageProps) => {
+  const { entityUrn, hostIdentityUrn, mutationOptions } = props;
   return useMutation({
     mutationFn: (messageText: string) =>
       new Promise<void>((resolve, reject) => {
@@ -20,8 +30,6 @@ export const useSendMessage = (entityUrn: string, hostIdentityUrn: string) => {
           }
         );
       }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["messages", entityUrn] });
-    },
+    ...mutationOptions,
   });
 };

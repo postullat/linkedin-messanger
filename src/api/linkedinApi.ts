@@ -15,7 +15,7 @@ export const linkedinApi = {
 
     const encodedUrn = encodeURIComponent(entityUrn).replace(/\(/g, "%28").replace(/\)/g, "%29");
 
-    const url = `https://www.linkedin.com/voyager/api/voyagerMessagingGraphQL/graphql?queryId=messengerMessages.455dde239612d966346c1d1c4352f648&variables=(conversationUrn:${encodedUrn})`;
+    const url = `https://www.linkedin.com/voyager/api/voyagerMessagingGraphQL/graphql?queryId=messengerMessages.29de52858e0fd96b4168ff9be9362b5e&variables=(conversationUrn:${encodedUrn})`;
 
     const response = await fetch(url, requestOptions);
     if (!response.ok) {
