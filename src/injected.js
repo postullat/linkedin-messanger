@@ -28,8 +28,6 @@ function init() {
 
     try {
       const data = await clone.json();
-      console.log(data,"data");
-      console.log(url,"url");
       const conversations = data?.data?.messengerConversationsBySyncToken?.elements;
       windowPostMessage("my-injected-script",conversations);
     } catch (error) {

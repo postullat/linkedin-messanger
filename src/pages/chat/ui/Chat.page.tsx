@@ -7,14 +7,14 @@ import { ChatActions } from "./ChatActions";
 import { ChatMessagesList } from "./ChatMessagesList";
 import { useSendMessage } from "@/hooks/useSendMessage";
 import { queryClient } from "@/App";
-import { useInput } from "@/hooks/useInput";
+import { useTextarea } from "@/hooks/useTextarea";
 
 export const ChatPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const selfProfleData = location.state.selfProfleData;
 
-  const newMessage = useInput();
+  const newMessage = useTextarea();
 
   const { entityUrn }: Readonly<Params<string>> = useParams();
 

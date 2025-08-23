@@ -1,9 +1,9 @@
 import { useState, type ChangeEvent } from "react";
 
-export const useInput = (initialValue = "") => {
+export const useTextarea = (initialValue = "") => {
   const [value, setValue] = useState(initialValue);
 
-  const onChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
+  const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value);
   };
 

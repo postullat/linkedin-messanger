@@ -14,20 +14,20 @@ export const Home = () => {
   }
   return (
     <div className="flex flex-col gap-3 pb-4">
-      {conversations.map((element) => {
+      {conversations.map((conversation) => {
         const participant =
-          element.conversationParticipants.find(
+          conversation.conversationParticipants.find(
             (participant) => participant.participantType.member.distance !== "SELF"
-          ) || element.conversationParticipants[0];
+          ) || conversation.conversationParticipants[0];
         const member = participant.participantType.member;
         const profilePicture = member.profilePicture;
-        const selfProfleData = element.conversationParticipants.find(
+        const selfProfleData = conversation.conversationParticipants.find(
           (conversationParticipant) =>
             conversationParticipant.participantType.member.distance === "SELF"
         );
         return (
           <ParticipantCard
-            key={element.createdAt}
+            key={conversation.createdAt}
             imageUrl={
               profilePicture.rootUrl + profilePicture.artifacts[1].fileIdentifyingUrlPathSegment
             }
@@ -35,7 +35,7 @@ export const Home = () => {
             lastName={member.lastName.text}
             profileUrl={member.profileUrl}
             onClick={() => {
-              navigate(`/chat/${element.entityUrn}`, {
+              navigate(`/chat/${conversation.entityUrn}`, {
                 state: { selfProfleData },
               });
             }}

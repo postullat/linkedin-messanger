@@ -39,7 +39,7 @@ export const ChatMessagesList = (props: ChatMessagesListProps) => {
                   </div>
                 )}
                 <div
-                  className={`rounded-2xl px-4 py-2 max-w-full break-words ${
+                  className={`rounded-2xl px-4 py-2 max-w-full whitespace-pre-wrap break-words ${
                     isMe ? "bg-blue-500 text-white ml-auto" : "bg-muted text-foreground"
                   }`}
                 >
