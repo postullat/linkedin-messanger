@@ -6,6 +6,9 @@ export interface Member {
     lastName: {
         text: string;
     }
+    headline: {
+         text: string;
+    }
     profileUrl: string;
     profilePicture: {
         artifacts: {

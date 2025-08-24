@@ -14,7 +14,7 @@ export const ChatMessagesList = (props: ChatMessagesListProps) => {
     bottomRef.current?.scrollIntoView();
   }, [messages]);
   return (
-    <div className="flex flex-col flex-1 gap-4 overflow-auto">
+    <div className="flex flex-col flex-1 gap-4 max-h-[300px] overflow-scroll">
       {messages.map((message, index) => {
         const messageText = message.body.text;
         const member = message.sender.participantType.member;

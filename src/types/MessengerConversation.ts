@@ -5,7 +5,7 @@ interface ParticipantType {
     member: Member;
 }
 
-interface ConversationParticipant {
+export interface ConversationParticipant {
     memberBadgeType: string;
     participantType: ParticipantType;
 }
@@ -17,4 +17,5 @@ export interface MessengerConversation {
     notificationStatus: string;
     entityUrn: string;
     createdAt: string;
+    lastActivityAt: number;
 }

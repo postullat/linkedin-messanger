@@ -9,7 +9,7 @@ export const NoAccessPage = () => {
   };
 
   return (
-    <section className="flex flex-col items-center justify-center h-full gap-6 text-center p-6 bg-gradient-to-b from-gray-50 to-white">
+    <section className="flex w-[300px] flex-col items-center justify-center h-full gap-6 text-center p-6 bg-gradient-to-b from-gray-50 to-white">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}

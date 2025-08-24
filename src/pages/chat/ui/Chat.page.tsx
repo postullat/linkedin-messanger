@@ -8,6 +8,7 @@ import { ChatMessagesList } from "./ChatMessagesList";
 import { useSendMessage } from "@/hooks/useSendMessage";
 import { queryClient } from "@/App";
 import { useTextarea } from "@/hooks/useTextarea";
+import { LayoutWithProfileWidget } from "@/shared/layouts/LayoutWithProfileWidget";
 
 export const ChatPage = () => {
   const navigate = useNavigate();
@@ -32,24 +33,26 @@ export const ChatPage = () => {
   });
 
   return (
-    <div className="flex flex-col h-full">
-      <Button onClick={() => navigate(-1)} variant="ghost" className="mb-3 w-fit">
-        <ChevronLeft />
-      </Button>
-      {isLoading ? (
-        <ChatLoading />
-      ) : (
-        <div className="overflow-y-auto flex-1 flex flex-col space-y-4">
-          <ChatMessagesList messages={[...messages].reverse()} />
-          <ChatActions
-            value={newMessage.value}
-            onChange={newMessage.onChange}
-            onSend={() => sendMessage(newMessage.value)}
-            isSending={isPending}
-            className="mt-auto"
-          />
-        </div>
-      )}
-    </div>
+    <LayoutWithProfileWidget className="w-[550px] grid grid-cols-2 gap-2 justify-between">
+      <div className="flex flex-col relative">
+        <Button onClick={() => navigate(-1)} variant="ghost" className="mb-3 w-fit">
+          <ChevronLeft />
+        </Button>
+        {isLoading ? (
+          <ChatLoading />
+        ) : (
+          <div className="flex-1 flex flex-col space-y-4 max-w-[300px]">
+            <ChatMessagesList messages={[...messages].reverse()} />
+            <ChatActions
+              value={newMessage.value}
+              onChange={newMessage.onChange}
+              onSend={() => sendMessage(newMessage.value)}
+              isSending={isPending}
+              className="mt-auto"
+            />
+          </div>
+        )}
+      </div>
+    </LayoutWithProfileWidget>
   );
 };
