@@ -1,4 +1,5 @@
 import { ProfileWidget } from "@/components/ProfileWidget";
+import { getAvatarUrl } from "@/pages/chat/utils/getAvatarUrl";
 import { useChatStore } from "@/store/useChatStore";
 import type { ComponentProps, ReactNode } from "react";
 
@@ -15,10 +16,7 @@ export const LayoutWithProfileWidget = (props: LayoutWithProfileWidgetProps) => 
         <ProfileWidget
           fullName={`${activeMember.firstName.text} ${activeMember.lastName.text}`}
           description={activeMember.headline.text}
-          avatarUrl={
-            activeMember.profilePicture.rootUrl +
-            activeMember.profilePicture.artifacts[1].fileIdentifyingUrlPathSegment
-          }
+          avatarUrl={getAvatarUrl(activeMember.profilePicture)}
           profileUrl={activeMember.profileUrl}
           className="h-fit"
         />

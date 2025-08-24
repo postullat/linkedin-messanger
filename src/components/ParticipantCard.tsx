@@ -1,6 +1,7 @@
 import type { ComponentProps } from "react";
 import { Card } from "./ui/Card";
 import classNames from "classnames";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/Avatar";
 
 function timeAgo(timestamp: number) {
   const now = Date.now();
@@ -23,7 +24,7 @@ function timeAgo(timestamp: number) {
 }
 
 interface ParticipantCardProps extends ComponentProps<"div"> {
-  imageUrl: string;
+  imageUrl: string | null;
   firstName: string;
   lastName: string;
   profileUrl: string;
@@ -34,7 +35,10 @@ export const ParticipantCard = (props: ParticipantCardProps) => {
   const { imageUrl, firstName, lastName, lastActivityAt, ...rest } = props;
   return (
     <Card {...rest} className={classNames("flex flex-row items-center gap-0", props.className)}>
-      <img src={imageUrl} className="w-6 h-6 rounded-full" />
+      <Avatar>
+        <AvatarImage src={imageUrl ? imageUrl : undefined} alt={firstName + lastName} />
+        <AvatarFallback className="text-lg font-semibold bg-gray-100">{firstName[0]}</AvatarFallback>
+      </Avatar>
       <span className="font-bold ml-2">
         {firstName} {lastName}
       </span>

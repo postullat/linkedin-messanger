@@ -6,6 +6,7 @@ import classNames from "classnames";
 import type { Member } from "@/types/Member";
 import { useChatStore } from "@/store/useChatStore";
 import { LayoutWithProfileWidget } from "@/shared/layouts/LayoutWithProfileWidget";
+import { getAvatarUrl } from "./chat/utils/getAvatarUrl";
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -48,9 +49,7 @@ export const Home = () => {
           return (
             <ParticipantCard
               key={conversation.createdAt}
-              imageUrl={
-                profilePicture.rootUrl + profilePicture.artifacts[1].fileIdentifyingUrlPathSegment
-              }
+              imageUrl={getAvatarUrl(profilePicture)}
               firstName={member.firstName.text}
               lastName={member.lastName.text}
               profileUrl={member.profileUrl}

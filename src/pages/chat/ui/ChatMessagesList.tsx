@@ -2,6 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import type { Message } from "@/types/Message";
 import { formatChatTimestamp } from "../utils/formatChatTimestamp";
 import { useEffect, useRef } from "react";
+import { getAvatarUrl } from "../utils/getAvatarUrl";
 
 interface ChatMessagesListProps {
   messages: Message[];
@@ -19,8 +20,7 @@ export const ChatMessagesList = (props: ChatMessagesListProps) => {
         const messageText = message.body.text;
         const member = message.sender.participantType.member;
         const profilePicture = member.profilePicture;
-        const avatarUrl =
-          profilePicture.rootUrl + profilePicture.artifacts[1].fileIdentifyingUrlPathSegment;
+        const avatarUrl = getAvatarUrl(profilePicture);
         const isMe = member.distance === "SELF" ? true : false;
         return (
           <>
@@ -29,7 +29,7 @@ export const ChatMessagesList = (props: ChatMessagesListProps) => {
               className={`flex gap-3 flex-1 ${isMe ? "flex-row-reverse" : "flex-row"}`}
             >
               <Avatar className="h-8 w-8 mt-1 shrink-0">
-                <AvatarImage src={avatarUrl} />
+                <AvatarImage src={avatarUrl ? avatarUrl : undefined} />
                 <AvatarFallback>{member.firstName.text.charAt(0)}</AvatarFallback>
               </Avatar>
               <div className={`flex flex-col max-w-[70%] ${isMe ? "items-end" : "items-start"}`}>

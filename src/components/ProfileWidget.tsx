@@ -8,7 +8,7 @@ import classNames from "classnames";
 interface ProfileWidgetProps extends ComponentProps<"div"> {
   fullName: string;
   description: string;
-  avatarUrl: string;
+  avatarUrl: string | null;
   profileUrl: string;
 }
 
@@ -19,9 +19,9 @@ export const ProfileWidget = (props: ProfileWidgetProps) => {
       <CardContent className="p-4 space-y-4">
         <div className="flex items-start gap-3">
           <Avatar className="h-12 w-12">
-            <AvatarImage src={avatarUrl} alt={fullName} className="rounded-full"/>
-            <AvatarFallback className="text-lg font-semibold bg-gray-100">
-              {fullName}
+            <AvatarImage src={avatarUrl ? avatarUrl : undefined} alt={fullName} className="rounded-full"/>
+            <AvatarFallback className="text-lg font-semibold bg-gray-100 rounded-full flex items-center justify-center w-full h-full block">
+              {fullName[0]}
             </AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0">
