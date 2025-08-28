@@ -19,7 +19,7 @@ export const ChatPage = () => {
 
   const { entityUrn }: Readonly<Params<string>> = useParams();
 
-  const { data: messages = [], isLoading } = useMessages(entityUrn as string);
+  const { isLoading } = useMessages(entityUrn as string);
 
   const { mutate: sendMessage, isPending } = useSendMessage({
     entityUrn: entityUrn as string,
@@ -42,7 +42,9 @@ export const ChatPage = () => {
           <ChatLoading />
         ) : (
           <div className="flex-1 flex flex-col space-y-4 max-w-[300px]">
-            <ChatMessagesList messages={[...messages].reverse()} />
+            <ChatMessagesList
+              entityUrn={entityUrn as string}
+            />
             <ChatActions
               value={newMessage.value}
               onChange={newMessage.onChange}

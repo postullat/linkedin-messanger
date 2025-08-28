@@ -24,10 +24,11 @@ export const linkedinApi = {
 
     return await response.json();
   },
-  async getOldMessages(entityUrn:string,csrfToken: string){
+  async getOldMessages(entityUrn: string,prevCursor:string, csrfToken: string) {
     const myHeaders = new Headers();
     myHeaders.append("csrf-token", csrfToken);
     myHeaders.append("Accept", "application/graphql");
+
     const requestOptions: RequestInit = {
       method: "GET",
       headers: myHeaders,
@@ -36,7 +37,32 @@ export const linkedinApi = {
     };
     const encodedUrn = encodeURIComponent(entityUrn).replace(/\(/g, "%28").replace(/\)/g, "%29");
 
-    const url = `https://www.linkedin.com/voyager/api/voyagerMessagingGraphQL/graphql?queryId=messengerMessages.0563a558c28c94833f7f35ce6d4155dd&variables=(conversationUrn:${encodedUrn},count:20,prevCursor:REVTQ0VORElORyYxNzU1MDEzNjgxMzkwJjItTVRjMU5UQXhNelk0TVRNNU1HSXlNVEEwTlMweE1EQW1ZbUUyWkRKa09XSXRZbUkxTXkwME1URTNMV0ptTURVdE5URmlZemhrTWpCbFlUSXdYekV3TUE9PQ)`;
+    const url = `https://www.linkedin.com/voyager/api/voyagerMessagingGraphQL/graphql?queryId=messengerMessages.0563a558c28c94833f7f35ce6d4155dd&variables=(conversationUrn:${encodedUrn},count:20,prevCursor:${prevCursor})`;
+
+    const response = await fetch(url, requestOptions);
+    if (!response.ok) {
+      console.error(response, "response");
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+  },
+  async getMessagesByTimestamp(entityUrn: string, csrfToken: string, deliveredAt: number) {
+    const myHeaders = new Headers();
+    myHeaders.append("csrf-token", csrfToken);
+    myHeaders.append("Accept", "application/graphql");
+
+    const requestOptions: RequestInit = {
+      method: "GET",
+      headers: myHeaders,
+      credentials: "include",
+      redirect: "follow",
+    };
+    const encodedUrn = encodeURIComponent(entityUrn).replace(/\(/g, "%28").replace(/\)/g, "%29");
+
+    const url = `https://www.linkedin.com/voyager/api/voyagerMessagingGraphQL/graphql?queryId=messengerMessages.cbeff7626f577ed0bb86eee77ca82563&variables=(deliveredAt:${deliveredAt},conversationUrn:${encodedUrn},countBefore:20,countAfter:0)`;
+
+    console.log(url, "getMessagesByTimestampURL");
 
     const response = await fetch(url, requestOptions);
     if (!response.ok) {
@@ -45,7 +71,12 @@ export const linkedinApi = {
 
     return await response.json();
   },
-  async sendMessage(entityUrn: string, hostIdentityUrn: string,csrfToken:string,messageText:string) {
+  async sendMessage(
+    entityUrn: string,
+    hostIdentityUrn: string,
+    csrfToken: string,
+    messageText: string
+  ) {
     const myHeaders = new Headers();
     myHeaders.append("csrf-token", csrfToken);
     myHeaders.append("Content-Type", "application/json");

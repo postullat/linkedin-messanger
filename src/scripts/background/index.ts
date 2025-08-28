@@ -5,6 +5,7 @@ import { handleSendMessage } from "./handlers/sendMessage";
 import { setCache } from "./cache";
 import { storage } from "./storage";
 import { handleGetOldMessages } from "./handlers/getOldMessages";
+import { handleGetMessagesByTimestamp } from "./handlers/getMessagesByTimestamp";
 
 initCsrfTokenListener();
 
@@ -25,7 +26,14 @@ chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
   }
 
   if (message.type === "GET_OLD_MESSAGES") {
-    handleGetOldMessages(message.payload, sendResponse);
+    const { entityUrn ,prevCursor} = message.payload;
+    handleGetOldMessages(entityUrn,prevCursor, sendResponse);
+    return true;
+  }
+
+  if (message.type === "GET_MESSAGES_BY_TIMESTAMP") {
+    const { entityUrn, deliveredAt } = message.payload;
+    handleGetMessagesByTimestamp(entityUrn, deliveredAt, sendResponse);
     return true;
   }
 
